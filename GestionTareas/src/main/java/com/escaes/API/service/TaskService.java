@@ -8,6 +8,9 @@ import com.escaes.API.model.Status;
 import com.escaes.API.repository.StatusRepository;
 import com.escaes.API.repository.TaskRepository;
 import com.escaes.API.DTO.TaskDTO;
+import com.escaes.API.DTO.TaskUpdateDTO;
+
+
 @Service
 public class TaskService {
 
@@ -47,6 +50,54 @@ public class TaskService {
             }
 
             return taskDTOs;
+        }
+
+        public Task patchTask(TaskUpdateDTO taskUpdateDTO,Long id) {
+            Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Task not found with ID: " + id));
+
+            Status status = statusRepository.findByStatusName(taskUpdateDTO.getStatusName()).orElseThrow(()-> new RuntimeException("Status not found"));
+            task.setStatus(status);
+            if(taskUpdateDTO.getTitle() != null) {
+                task.setTitle(taskUpdateDTO.getTitle());
+            }
+            if(taskUpdateDTO.getDescription() != null) {
+                task.setDescription(taskUpdateDTO.getDescription());
+            }
+            if(taskUpdateDTO.getDueDate() != null) {
+                task.setDueDate(taskUpdateDTO.getDueDate());
+            }
+            if(taskUpdateDTO.getStatusName() != null) {
+                task.setStatus(status);
+            }
+
+            return  taskRepository.save(task);
+        }
+
+        public Task putTask(TaskUpdateDTO taskUpdateDTO, Long id) {
+            Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Task not found with ID: " + id));
+
+            Status status = statusRepository.findByStatusName(taskUpdateDTO.getStatusName()).orElseThrow(()-> new RuntimeException("Status not found"));
+            task.setStatus(status);
+            task.setTitle(taskUpdateDTO.getTitle());
+            task.setDescription(taskUpdateDTO.getDescription());
+            task.setDueDate(taskUpdateDTO.getDueDate());
+            task.setStatus(status);
+
+            return  taskRepository.save(task);
+        }
+
+        public void deleteTaskByid(Long id) {
+            Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Task not found with ID: " + id));
+            taskRepository.delete(task);
+        }
+
+        public void deleteTaskByTitle(String title) {
+            Task task = taskRepository.findByTitle(title)
+            .orElseThrow(() -> new RuntimeException("Task not found with Title: " + title));
+            taskRepository.delete(task);
         }
 
 }
