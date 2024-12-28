@@ -7,7 +7,7 @@ Aún está en desarrollo, pero actualmente puedes realizar operaciones CRUD bás
 - Java
 - Spring Boot
 - Spring Data JPA
-- MYSQL (o cualquier otra base de datos que estés usando)
+- MYSQL 
 
 ### Pasos previos para el funcionamiento correcto
 
