@@ -66,7 +66,7 @@ public class APIController {
         return taskService.patchTask(taskUpdateDTO, id);
     }
     
-    @PutMapping("path/{id}")
+    @PutMapping("/tasks/{id}")
     public Task putTask(@PathVariable Long id, @RequestBody TaskUpdateDTO taskUpdateDTO) {
         
         
