@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Data Visualization</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">Combined Data from API</h2>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4>Bored API Data</h4>
+            <div id="boredData" class="card">
+                <div class="card-body">
+                    <p><strong>Activity:</strong> <span id="activity"></span></p>
+                    <p><strong>Availability:</strong> <span id="availability"></span></p>
+                    <p><strong>Type:</strong> <span id="type"></span></p>
+                    <p><strong>Participants:</strong> <span id="participants"></span></p>
+                    <p><strong>Price:</strong> <span id="price"></span></p>
+                    <p><strong>Link:</strong> <a id="link" href="#" target="_blank">Click here</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <h4>Task Data</h4>
+            <div id="taskData" class="list-group">
+                <!-- Tasks will be listed here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap and JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    
+    window.onload = function() {
+        fetch('/api/v1')  
+            .then(response => response.json())  
+            .then(data => {
+                // Bored API
+                document.getElementById('activity').innerText = data.externalData.activity;
+                document.getElementById('availability').innerText = data.externalData.availability;
+                document.getElementById('type').innerText = data.externalData.type;
+                document.getElementById('participants').innerText = data.externalData.participants;
+                document.getElementById('price').innerText = data.externalData.price;
+                document.getElementById('link').href = data.externalData.link;
+                document.getElementById('link').innerText = 'Go to Activity';
+
+                
+                let taskList = data.tasks;
+                let taskContainer = document.getElementById('taskData');
+                taskContainer.innerHTML = '';  
+
+                taskList.forEach(task => {
+                    let listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item');
+                    listItem.innerHTML = `<strong>${task.title}</strong>: ${task.description} (${task.statusName})`;
+                    taskContainer.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    };
+</script>
+
+</body>
+</html>
