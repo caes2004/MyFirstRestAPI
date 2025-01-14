@@ -24,6 +24,9 @@ import com.escaes.API.DTO.TaskUpdateDTO;
 import com.escaes.API.model.Task;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.client.RestTemplate;
+import com.escaes.API.DTO.StatusDTO;
+import com.escaes.API.service.StatusService;
+
 
 
 
@@ -45,6 +48,8 @@ public class APIController {
     private TaskRepository taskRepository;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private StatusService statusService;
 
     @GetMapping("/tasks")
     public List<Task> getTasks() {
@@ -65,6 +70,11 @@ public class APIController {
         
         return taskService.createTask(taskDTO);
     }
+    @PostMapping("/statusDTO")
+    public StatusDTO createStatusDTO(@RequestBody StatusDTO statusDTO) {
+        
+        return statusService.createStatus(statusDTO);
+    }
     
     @GetMapping("/tasksDTO")
     public List<TaskDTO>getAllTaskDTO() {
@@ -73,6 +83,12 @@ public class APIController {
         return taskDTOs;
     
     }
+    @GetMapping("/statusDTO")
+    public List<StatusDTO> getMethodName() {
+        List<StatusDTO> statusDTOs = statusService.getAllStatusDTO();
+        return statusDTOs; 
+    }
+    
     @PatchMapping("/tasks/{id}")
     public Task patchTask(@RequestBody TaskUpdateDTO taskUpdateDTO, @PathVariable Long id) {
         
@@ -94,6 +110,11 @@ public class APIController {
     public void deleteTaskByTitle(@PathVariable String title) {
         
         taskService.deleteTaskByTitle(title);
+    }
+    @DeleteMapping("/status/{id}")
+    public void deleteStatus(@PathVariable Long id) {
+        
+        statusService.deleteStatus(id);
     }
 
     @GetMapping("/bored")
