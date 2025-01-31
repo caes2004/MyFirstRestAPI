@@ -40,6 +40,15 @@ public class TaskService {
 
             List<TaskDTO> taskDTOs = new ArrayList<TaskDTO>();
 
+            tasks.forEach(task -> {
+                TaskDTO taskDTO = new TaskDTO();
+                taskDTO.setTitle(task.getTitle());
+                taskDTO.setDescription(task.getDescription());
+                taskDTO.setDueDate(task.getDueDate());
+                taskDTO.setStatusName(task.getStatus().getStatusName());
+                taskDTOs.add(taskDTO);
+            });
+            /* 
             for (Task task : tasks) {
                 TaskDTO taskDTO = new TaskDTO();
                 taskDTO.setTitle(task.getTitle());
@@ -48,7 +57,7 @@ public class TaskService {
                 taskDTO.setStatusName(task.getStatus().getStatusName());
                 taskDTOs.add(taskDTO);
             }
-
+            */
             return taskDTOs;
         }
 

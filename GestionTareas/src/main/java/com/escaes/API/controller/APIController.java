@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Arrays;
+
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +23,9 @@ import com.escaes.API.DTO.TaskDTO;
 import com.escaes.API.DTO.TaskUpdateDTO;
 import com.escaes.API.model.Task;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.client.RestTemplate;
+//import org.springframework.web.client.RestTemplate;
 import com.escaes.API.DTO.StatusDTO;
+import com.escaes.API.service.BoredService;
 import com.escaes.API.service.StatusService;
 
 
@@ -38,18 +39,20 @@ import com.escaes.API.service.StatusService;
 @RequestMapping("/api")
 public class APIController {
     
-    private final RestTemplate restTemplate;
+   /* private final RestTemplate restTemplate;
 
     public APIController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
+     */
     @Autowired
     private TaskRepository taskRepository;
     @Autowired
     private TaskService taskService;
     @Autowired
     private StatusService statusService;
+    @Autowired
+    private BoredService boredService;
 
     @GetMapping("/tasks")
     public List<Task> getTasks() {
@@ -116,7 +119,7 @@ public class APIController {
         
         statusService.deleteStatus(id);
     }
-
+    /*
     @GetMapping("/bored")
     public List<BoredDTO> BoredAPI() {
         String url = "https://bored-api.appbrewery.com/random";
@@ -125,6 +128,19 @@ public class APIController {
 
         return Arrays.asList(response.getBody());
     }
+     */
+    
+    @GetMapping("/bored")
+    public ResponseEntity<BoredDTO>BoredApi(){
+        BoredDTO response = boredService.randomBored();
+
+        if(response.getActivity().equals("Error al obtener actividad")){
+            return ResponseEntity.status(500).body(response);
+        }
+        return ResponseEntity.ok(response);
+
+    }
+    /*
     @GetMapping("/v1")
     public ResponseEntity<CombinedDTO> getCombinedData() {
 
@@ -135,5 +151,16 @@ public class APIController {
             return ResponseEntity.ok(combinedDTO);
         
     }
-    
+     */
+
+    @GetMapping("/v1")
+    public ResponseEntity<CombinedDTO> getCombinedData() {
+        BoredDTO response = boredService.randomBored();
+        List<TaskDTO> taskDTOs = taskService.getAllTaskDTO();
+        if(response.getActivity().equals("Error al obtener actividad")){
+            return ResponseEntity.status(500).body(new CombinedDTO(taskDTOs, response));
+        }
+        CombinedDTO combinedDTO = new CombinedDTO(taskDTOs, response);
+        return ResponseEntity.ok(combinedDTO);
+    }
 }
