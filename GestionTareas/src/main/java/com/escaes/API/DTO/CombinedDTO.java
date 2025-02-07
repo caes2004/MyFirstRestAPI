@@ -9,6 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class CombinedDTO {
     private List<TaskDTO> tasks;
-    private BoredDTO externalData;
+    private JokeDTO externalData;
 
 }

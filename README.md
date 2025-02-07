@@ -9,23 +9,21 @@ Aún está en desarrollo, pero actualmente puedes realizar operaciones CRUD bás
 - Spring Data JPA
 - MYSQL 
 
-### Pasos previos para el funcionamiento correcto
+## Pasos previos para el funcionamiento correcto
+Antes de crear una tarea, se recomienda hacer una petición POST al siguiente endpoint para registrar previamente los estados (status) y asegurarse de que estén disponibles:
 
-Antes de poder utilizar los endpoints, es necesario insertar los valores iniciales en la tabla `status` para asegurarse de que los estados de las tareas estén disponibles. 
-Esto se puede hacer ejecutando las siguientes instrucciones SQL en la base de datos:
+📌 Endpoint:
+**POST /api/statusDTO** 
 
-sql
--- Insertar los estados en la tabla `status`
-INSERT INTO status (status_name) VALUES ('pendiente');
-INSERT INTO status (status_name) VALUES ('progreso');
-INSERT INTO status (status_name) VALUES ('completada');
+Registrar los estados antes de crear una tarea garantizará que se pueda asignar correctamente un estado a cada una, a continuacion ejemplo del JSON para realizar la petición:
 
--- Confirmar los cambios en la base de datos
-COMMIT;
+{
+  "statusName":"prueba"
+}
 
-### Endpoints
+### Endpoints Para mas claridad se recomienda usar Swagger accediendo a la ruta /api-docs
 
-**POST /tasksDTO** - Crear una nueva tarea utilizando DTO
+**POST /api/tasksDTO** - Crear una nueva tarea utilizando DTO
 
 Ejemplo de cuerpo de la solicitud (JSON):
 
@@ -37,7 +35,7 @@ Ejemplo de cuerpo de la solicitud (JSON):
   "statusName": "pendiente"
 }
 
-**POST /tasks** - Crear una nueva tarea
+**POST /api/tasks** - Crear una nueva tarea
 
 Ejemplo de cuerpo de la solicitud (JSON):
 
@@ -49,7 +47,7 @@ Ejemplo de cuerpo de la solicitud (JSON):
         "id": 1
     }
 }
-### **GET /tasksDTO** - Obtener todas las tareas usando el DTO, excluyendo el campo `id` de las tareas.
+### **GET /api/tasksDTO** - Obtener todas las tareas usando el DTO, excluyendo el campo `id` de las tareas.
 
 Este endpoint devuelve una lista de todas las tareas almacenadas, pero con los datos enviados a través del **DTO (Data Transfer Object)**,
 donde el campo `id` de las tareas está restringido para no ser expuesto en la respuesta.
@@ -66,3 +64,10 @@ donde el campo `id` de las tareas está restringido para no ser expuesto en la r
     "statusName": "pendiente"
    }
 
+## Index básico para corroborar el correcto funcionamiento de los datos
+
+![alt text](index.png)
+
+## Docmunetacion de Swagger en /api-docs
+![alt text](swagger1.png)
+![alt text](swagger2.png)

@@ -66,17 +66,16 @@
     <h2>Datos Combinados de la API</h2>
 
     <div class="row mt-4">
-        <!-- Sección Bored API -->
+        <!-- Sección Joke API -->
         <div class="col-md-6">
-            <h4 class="section-title">Bored API Data</h4>
+            <h4 class="section-title">Joke API Data</h4>
             <div id="boredData" class="card p-3">
                 <div class="card-body">
-                    <p><strong>Actividad:</strong> <span id="activity"></span></p>
-                    <p><strong>Disponibilidad:</strong> <span id="availability"></span></p>
+                    <p><strong>Categoria:</strong> <span id="category"></span></p>
                     <p><strong>Tipo:</strong> <span id="type"></span></p>
-                    <p><strong>Participantes:</strong> <span id="participants"></span></p>
-                    <p><strong>Precio:</strong> <span id="price"></span></p>
-                    <p><strong>Enlace:</strong> <a id="link" href="#" target="_blank">Ver actividad</a></p>
+                    <p><strong>Planeamiento:</strong> <span id="setup"></span></p>
+                    <p><strong>Desenlace:</strong> <span id="delivery"></span></p>
+                   
                 </div>
             </div>
         </div>
@@ -99,13 +98,12 @@
         fetch('/api/v1')  
             .then(response => response.json())  
             .then(data => {
-                // Bored API
-                document.getElementById('activity').innerText = data.externalData.activity;
-                document.getElementById('availability').innerText = data.externalData.availability;
+                // Joke API
+                document.getElementById('category').innerText = data.externalData.category;
                 document.getElementById('type').innerText = data.externalData.type;
-                document.getElementById('participants').innerText = data.externalData.participants;
-                document.getElementById('price').innerText = data.externalData.price;
-                document.getElementById('link').href = data.externalData.link;
+                document.getElementById('setup').innerText = data.externalData.setup;
+                document.getElementById('delivery').innerText = data.externalData.delivery;
+                
 
                 // Lista de tareas
                 let taskList = data.tasks;
@@ -115,7 +113,7 @@
                 taskList.forEach(task => {
                     let listItem = document.createElement('li');
                     listItem.classList.add('list-group-item');
-                    listItem.innerHTML = `<strong>${task.title}</strong>: ${task.description} (${task.statusName})`;
+                    listItem.innerHTML = `<strong>${task.title}</strong>: <strong>${task.dueDate}</strong><br>${task.description} (${task.statusName})`;
                     taskContainer.appendChild(listItem);
                 });
             })

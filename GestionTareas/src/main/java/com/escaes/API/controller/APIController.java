@@ -16,16 +16,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import com.escaes.API.DTO.BoredDTO;
 import com.escaes.API.DTO.CombinedDTO;
+import com.escaes.API.DTO.JokeDTO;
 import com.escaes.API.DTO.TaskDTO;
 import com.escaes.API.DTO.TaskUpdateDTO;
 import com.escaes.API.model.Task;
 import org.springframework.web.bind.annotation.PutMapping;
 //import org.springframework.web.client.RestTemplate;
 import com.escaes.API.DTO.StatusDTO;
-import com.escaes.API.service.BoredService;
+import com.escaes.API.service.JokeService;
 import com.escaes.API.service.StatusService;
 
 
@@ -52,7 +51,7 @@ public class APIController {
     @Autowired
     private StatusService statusService;
     @Autowired
-    private BoredService boredService;
+    private JokeService jokeService;
 
     @GetMapping("/tasks")
     public List<Task> getTasks() {
@@ -130,13 +129,14 @@ public class APIController {
     }
      */
     
-    @GetMapping("/bored")
-    public ResponseEntity<BoredDTO>BoredApi(){
-        BoredDTO response = boredService.randomBored();
-
-        if(response.getActivity().equals("Error al obtener actividad")){
+    @GetMapping("/joke")
+    public ResponseEntity<JokeDTO>BoredApi(){
+        JokeDTO response = jokeService.randomJoke();
+        if (response.isError()) {
             return ResponseEntity.status(500).body(response);
+            
         }
+        
         return ResponseEntity.ok(response);
 
     }
@@ -155,9 +155,9 @@ public class APIController {
 
     @GetMapping("/v1")
     public ResponseEntity<CombinedDTO> getCombinedData() {
-        BoredDTO response = boredService.randomBored();
+        JokeDTO response = jokeService.randomJoke();
         List<TaskDTO> taskDTOs = taskService.getAllTaskDTO();
-        if(response.getActivity().equals("Error al obtener actividad")){
+        if(response.isError()){
             return ResponseEntity.status(500).body(new CombinedDTO(taskDTOs, response));
         }
         CombinedDTO combinedDTO = new CombinedDTO(taskDTOs, response);
