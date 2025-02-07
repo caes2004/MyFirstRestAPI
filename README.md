@@ -1,7 +1,8 @@
 # API REST de Gestión de Tareas
 
-Este es mi primer proyecto de una API REST que permite gestionar tareas. La API incluye endpoints que manejan datos tanto con como sin el uso de DTOs. 
-Aún está en desarrollo, pero actualmente puedes realizar operaciones CRUD básicas.
+Este es mi primer proyecto de una API REST para la gestión de tareas. La API proporciona endpoints que permiten manejar datos tanto con DTOs como sin ellos.
+
+Actualmente, la API está en desarrollo, pero ya soporta operaciones CRUD básicas. Además, integra datos de una API externa (JokeAPI), lo que me permite practicar el consumo y combinación de datos provenientes de diferentes fuentes.
 
 ## Tecnologías Utilizadas
 - Java
@@ -64,10 +65,10 @@ donde el campo `id` de las tareas está restringido para no ser expuesto en la r
     "statusName": "pendiente"
    }
 
-## Index básico para corroborar el correcto funcionamiento de los datos
+## Prueba de conectividad y respuesta de la API
 
 ![alt text](index.png)
 
-## Docmunetacion de Swagger en /api-docs
+## Documentación de Swagger en /api-docs
 ![alt text](swagger1.png)
 ![alt text](swagger2.png)
