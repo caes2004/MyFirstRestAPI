@@ -4,16 +4,15 @@ import com.escaes.API.DTO.StatusDTO;
 import com.escaes.API.model.Status;
 import java.util.List;
 import java.util.ArrayList;
-
-
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
 public class StatusService {
-    @Autowired
-    private StatusRepository statusRepository;
+    private final StatusRepository statusRepository;
 
+    public StatusService(StatusRepository statusRepository) {
+        this.statusRepository = statusRepository;
+    }
+    
     public List<StatusDTO> getAllStatusDTO(){
 
             List<Status> status = statusRepository.findAll();

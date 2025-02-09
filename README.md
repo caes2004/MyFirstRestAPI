@@ -11,16 +11,16 @@ Actualmente, la API está en desarrollo, pero ya soporta operaciones CRUD básic
 - MYSQL 
 
 ## Pasos previos para el funcionamiento correcto
-Antes de crear una tarea, se recomienda hacer una petición POST al siguiente endpoint para registrar previamente los estados (status) y asegurarse de que estén disponibles:
+Los siguientes estados se proporcionan de manera predeterminada: Pendiente, En proceso y Terminada.
+Al crear una tarea, se deberá utilizar uno de estos estados predefinidos.
 
-📌 Endpoint:
-**POST /api/statusDTO** 
+Si es necesario, también se puede crear un estado personalizado a través del siguiente endpoint:
 
-Registrar los estados antes de crear una tarea garantizará que se pueda asignar correctamente un estado a cada una, a continuacion ejemplo del JSON para realizar la petición:
+📌 Endpoint: POST /api/statusDTO
+ 
+ Ejemplo del JSON para realizar la petición:
 
-{
-  "statusName":"prueba"
-}
+{ "statusName":"prueba" }
 
 ### Endpoints Para mas claridad se recomienda usar Swagger accediendo a la ruta /api-docs
 
